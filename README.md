@@ -6,10 +6,10 @@ Instead of trying to be a large SEO platform, Page Pulse focuses on one simple w
 
 ## Live Links
 
-Frontend: Add Vercel link here  
-Backend: Add Render link here  
-GitHub Repository: Add GitHub link here  
-Loom Walkthrough: Add Loom link here  
+Frontend: https://page-pulse-pte6.vercel.app/  
+Backend: https://page-pulse-jvcw.onrender.com  
+GitHub Repository: https://github.com/aryathakurds/Page-Pulse.git 
+Loom Walkthrough: https://photos.app.goo.gl/7qRh3hCBhModdsiL7 
 
 ## What It Checks
 
