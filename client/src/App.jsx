@@ -1,12 +1,26 @@
-import { AlertCircle, CheckCircle2, ExternalLink, Loader2, Search } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  ExternalLink,
+  Gauge,
+  ImageOff,
+  Loader2,
+  Radar,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Type,
+  Zap,
+} from "lucide-react";
 import { useState } from "react";
 import "./styles.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-function Metric({ label, value }) {
+function Metric({ icon, label, value, accent }) {
   return (
-    <div className="metric">
+    <div className="metric" style={{ "--accent": accent }}>
+      <div className="metricIcon">{icon}</div>
       <span>{label}</span>
       <strong>{value}</strong>
     </div>
@@ -21,7 +35,6 @@ function App() {
 
   async function handleAudit(event) {
     event.preventDefault();
-
     setLoading(true);
     setError("");
     setReport(null);
@@ -29,9 +42,7 @@ function App() {
     try {
       const response = await fetch(`${API_URL}/audit`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       });
 
@@ -52,19 +63,41 @@ function App() {
   return (
     <main className="app">
       <section className="hero">
-        <p className="eyebrow">Website audit utility</p>
-        <h1>Page Pulse</h1>
-        <p>
-          Check a website's status, speed, title, description, headings, image alt text,
-          and word count in one quick report.
+        <div className="badge">
+          <Sparkles size={16} />
+          Smart website audit
+        </div>
+
+        <h1 className="title3d" data-text="Page Pulse">
+          Page Pulse
+        </h1>
+
+        <p className="description">
+          A clean audit console that checks a website's status, response speed,
+          SEO basics, heading structure, image alt text, and content depth in one
+          quick scan.
         </p>
+
+        <div className="signalRow">
+          <span>
+            <Zap size={16} /> Speed
+          </span>
+          <span>
+            <ShieldCheck size={16} /> Accessibility
+          </span>
+          <span>
+            <Radar size={16} /> SEO Signals
+          </span>
+        </div>
       </section>
 
-      <section className="panel">
+      <section className="auditCard">
         <form onSubmit={handleAudit}>
-          <label htmlFor="url">Website URL</label>
+          <label htmlFor="url">Website Link</label>
 
-          <div className="inputRow">
+          <div className="smartInput">
+            <Search className="inputIcon" size={20} />
+
             <input
               id="url"
               type="text"
@@ -74,8 +107,8 @@ function App() {
             />
 
             <button type="submit" disabled={loading || !url.trim()}>
-              {loading ? <Loader2 className="spin" size={18} /> : <Search size={18} />}
-              {loading ? "Auditing" : "Audit Website"}
+              {loading ? <Loader2 className="spin" size={18} /> : <Radar size={18} />}
+              {loading ? "Scanning" : "Audit"}
             </button>
           </div>
         </form>
@@ -94,6 +127,7 @@ function App() {
             <div>
               <p className="eyebrow">Audit report</p>
               <h2>{report.title}</h2>
+
               <a href={report.url} target="_blank" rel="noreferrer">
                 {report.url}
                 <ExternalLink size={15} />
@@ -107,10 +141,30 @@ function App() {
           </div>
 
           <div className="grid">
-            <Metric label="Response Time" value={report.responseTime} />
-            <Metric label="H1 Count" value={report.h1Count} />
-            <Metric label="Images Missing Alt" value={report.missingAltImages} />
-            <Metric label="Word Count" value={report.wordCount} />
+            <Metric
+              icon={<Gauge size={20} />}
+              label="Response Time"
+              value={report.responseTime}
+              accent="#2563eb"
+            />
+            <Metric
+              icon={<Type size={20} />}
+              label="H1 Count"
+              value={report.h1Count}
+              accent="#16a34a"
+            />
+            <Metric
+              icon={<ImageOff size={20} />}
+              label="Missing Alt"
+              value={report.missingAltImages}
+              accent="#ea580c"
+            />
+            <Metric
+              icon={<Sparkles size={20} />}
+              label="Word Count"
+              value={report.wordCount}
+              accent="#7c3aed"
+            />
           </div>
 
           <div className="meta">
